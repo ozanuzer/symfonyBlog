@@ -1,0 +1,237 @@
+{# app/Resources/views/Admin/content.html.twig #}
+{% include('Admin/header.html.twig') %}
+      <!-- BEGIN PAGE -->
+      <div class="page-content">
+         <!-- BEGIN PAGE HEADER-->
+         <div class="row">
+            <div class="col-md-12">
+               <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+               <h3 class="page-title">
+                  İçerik <small>Yönetimi</small>
+               </h3>
+               <ul class="page-breadcrumb breadcrumb">
+
+                  <li>
+                     <i class="icon-home"></i>
+                     <a href="index.html">Ana Sayfa</a>
+                     <i class="icon-angle-right"></i>
+                  </li>
+                  <li>
+                     <a href='/admin/contents'>İçerikler</a>
+                     <i class="icon-angle-right"></i>
+                  </li>
+{% if val.process == 'default' %}
+                  <li><a href="#">Show all</a></li>
+               </ul>
+               <!-- END PAGE TITLE & BREADCRUMB-->
+            </div>
+         </div>
+         <!-- END PAGE HEADER-->
+         <!-- BEGIN PAGE CONTENT-->
+         <div class="row">
+            <div class="col-md-12">
+
+               <div class="portlet box blue">
+                  <div class="portlet-title">
+                     <div class="caption"><i class="icon-globe"></i><a href='/admin/contents/new' style="color:#fff;" >Yeni İçerik</a></div>
+                     <div class="actions">
+                        <div class="btn-group">
+                           <a class="btn default" href="#" data-toggle="dropdown">
+                           Columns
+                           <i class="icon-angle-down"></i>
+                           </a>
+                           <div id="sample_2_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+                              <label><input type="checkbox" checked data-column="0">id</label>
+                              <label><input type="checkbox" checked data-column="1">Başlık</label>
+                              <label><input type="checkbox" checked data-column="2">Kategorisi</label>
+                              <label><input type="checkbox" checked data-column="3">Özet İçerik</label>
+                              <label><input type="checkbox" checked data-column="4">İşlem</label>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="portlet-body">
+                     <table class="table table-striped table-bordered table-hover table-full-width" id="sample_2">
+                        <thead>
+                           <tr>
+                              <th>#</th>
+                              <th>Başlık</th>
+                              <th>Kategorisi</th>
+                              <th>Özet İçerik</th>
+                              <th class="hidden-xs">İşlem</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                              {% for item in val.items %}
+                           <tr id = "{{item.id}}">
+                              <td>{{item.id}}</td>
+                              <td>{{item.title}}</td>
+                              <td>{{item.cat}}</td>
+                              <td>{{item.content}}</td>
+                              <td><a href='/admin/contents/edit?id={{item.id}}' >Düzenle</a>&nbsp;|&nbsp;<a href='/admin/contents/delete?id={{item.id}}' >Sil</a></td>
+                           </tr>
+                           {% endfor %}
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <!-- END EXAMPLE TABLE PORTLET-->
+            </div>
+         </div>
+
+{% elseif val.process == 'new' %}
+      <li><a href="#">Yeni İçerik</a></li>
+               </ul>
+               <!-- END PAGE TITLE & BREADCRUMB-->
+            </div>
+         </div>
+         <!-- END PAGE HEADER-->
+         <!-- BEGIN PAGE CONTENT-->
+         <div class="row">
+            <div class="col-md-12">
+
+               <div class="portlet box green">
+                           <div class="portlet-title">
+                              <div class="caption"><i class="icon-reorder"></i>Yeni İçerik</div>
+
+                           </div>
+                           <div class="portlet-body form">
+                              <!-- BEGIN FORM-->
+                              <form action='/admin/contents/new' class="form-horizontal" method="post">
+                                 <input type="hidden" name="new_cat" value="1" />
+                                 <div class="form-body">
+                                    <div class="form-group">
+                                       <label  class="col-md-3 control-label">Başlık</label>
+                                       <div class="col-md-4">
+                                          <input type="text" class="form-control" placeholder="İçerik ismini girin" name="title">
+                                          <span class="help-block">İçerik Adı.</span>
+                                       </div>
+                                    </div>
+
+
+                                    <div class="form-group last">
+                                       <label  class="col-md-3 control-label">Kategori</label>
+                                       <div class="col-md-9">
+                                          <select class="form-control select2_category" name="cat_id">
+                                             {% for cat in val.cats %}
+                                             <option value="{{cat.id}}">{{cat.title}}</option>
+                                                 {% if (cat.subcats is defined) %}
+                                                    {% for subcat in cat.subcats %}
+                                                       <option value="{{subcat.id}}">&nbsp;&nbsp;--{{subcat.title}}</option>
+                                                    {% endfor %}
+                                                 {% endif %}
+                                             {% endfor %}
+                                          </select>
+                                       </div>
+                                    </div>
+
+                                    <div class="form-group last">
+                                       <label  class="col-md-3 control-label">İçerik</label>
+                                       <div class="col-md-9">
+                                          <div id="page">
+                                             <textarea id="redactor_content" name="content">
+                                             </textarea>
+                                             </div>
+                                       </div>
+                                    </div>
+
+                                 </div>
+                                 <div class="form-actions fluid">
+                                    <div class="col-md-offset-3 col-md-9">
+                                       <button type="submit" class="btn blue">Submit</button>
+                                       <button type="button" class="btn default">Cancel</button>
+                                    </div>
+                                 </div>
+                              </form>
+                              <!-- END FORM-->
+                           </div>
+                        </div>
+            </div>
+         </div>
+{% elseif val.process == 'edit' %}
+<li><a href="#">Edit Content</a></li>
+               </ul>
+               <!-- END PAGE TITLE & BREADCRUMB-->
+            </div>
+         </div>
+         <!-- END PAGE HEADER-->
+         <!-- BEGIN PAGE CONTENT-->
+         <div class="row">
+            <div class="col-md-12">
+
+               <div class="portlet box green">
+                           <div class="portlet-title">
+                              <div class="caption"><i class="icon-reorder"></i>Edit content - {{val.item.title}}</div>
+                              <div class="tools">
+                                 <a href="javascript:;" class="collapse"></a>
+                                 <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                                 <a href="javascript:;" class="reload"></a>
+                                 <a href="javascript:;" class="remove"></a>
+                              </div>
+                           </div>
+                           <div class="portlet-body form">
+                              <!-- BEGIN FORM-->
+                              <form action='/admin/contents/edit?id={{val.item.id}}' class="form-horizontal" method="post">
+                                 <div class="form-body">
+                                    <div class="form-group">
+                                       <label  class="col-md-3 control-label">Başlık</label>
+                                       <div class="col-md-4">
+                                          <input type="text" class="form-control" placeholder="Enter Name" name="title" value="{{val.item.title}}">
+                                          <span class="help-block">İçerik Adını Yazınız.</span>
+                                       </div>
+                                    </div>
+
+
+                                    <div class="form-group last">
+                                       <label  class="col-md-3 control-label">Kategori</label>
+                                       <div class="col-md-9">
+                                          <select class="form-control select2_category" name="cat_id">
+                                          {% for cat in val.cats %}
+                                          <option value="{{cat.id}}" {% if cat.id == val.item.catid %} selected {% endif %} >{{cat.title}}</option>
+                                              {% if (cat.subcats is defined) %}
+                                                 {% for subcat in cat.subcats %}
+                                                    <option value="{{subcat.id}}" {% if subcat.id == val.item.catid %} selected {% endif %} >&nbsp;&nbsp;--{{subcat.title}}</option>
+                                                 {% endfor %}
+                                              {% endif %}
+                                          {% endfor %}
+                                          </select>
+                                       </div>
+                                    </div>
+
+                                    <div class="form-group last">
+                                       <label  class="col-md-3 control-label">İçerik</label>
+                                       <div class="col-md-9">
+                                          <div id="page">
+                                             <textarea id="redactor_content" name="content">
+                                                {{val.item.content}}
+                                             </textarea>
+                                             </div>
+                                       </div>
+                                    </div>
+
+                                 </div>
+                                 <div class="form-actions fluid">
+                                    <div class="col-md-offset-3 col-md-9">
+                                       <button type="submit" class="btn blue">Submit</button>
+                                       <button type="button" class="btn default">Cancel</button>
+                                    </div>
+                                 </div>
+                              </form>
+                              <!-- END FORM-->
+                           </div>
+                        </div>
+
+            </div>
+         </div>
+{% endif %}
+
+
+
+
+
+         <!-- END PAGE CONTENT-->
+      </div>
+      <!-- END PAGE -->
+   </div>
+   <!-- END CONTAINER -->
+{% include('Admin/footer.html.twig') %}

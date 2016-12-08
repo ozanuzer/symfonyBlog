@@ -1,0 +1,207 @@
+
+   <div class='footer'>
+      <div class='footer-inner'>
+         2016 &copy; Ozan Uzer.
+      </div>
+      <div class='footer-tools'>
+         <span class='go-top'>
+         <i class='icon-angle-up'></i>
+         </span>
+      </div>
+   </div>
+   <!--[if lt IE 9]>
+   <script src='{{ asset('assets/plugins/respond.min.js') }}'></script>
+   <script src='{{ asset('assets/plugins/excanvas.min.js') }}'></script>
+   <![endif]-->
+   <script src='{{ asset('assets/plugins/jquery-1.10.2.min.js') }}' type='text/javascript'></script>
+   <script src='{{ asset('assets/plugins/jquery-migrate-1.2.1.min.js') }}' type='text/javascript'></script>
+   <script src='{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}' type='text/javascript'></script>
+   <script src='{{ asset('assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js') }}' type='text/javascript' ></script>
+   <script src='{{ asset('assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}' type='text/javascript'></script>
+   <script src='{{ asset('assets/plugins/jquery.blockui.min.js') }}' type='text/javascript'></script>
+   <script src='{{ asset('assets/plugins/jquery.cookie.min.js') }}' type='text/javascript'></script>
+   <script src='{{ asset('assets/plugins/uniform/jquery.uniform.min.js') }}' type='text/javascript' ></script>
+   <script type='text/javascript' src='{{ asset('assets/plugins/select2/select2.min.js') }}'></script>
+   <script type='text/javascript' src='{{ asset('assets/plugins/data-tables/jquery.dataTables.min.js') }}'></script>
+   <script type='text/javascript' src='{{ asset('assets/plugins/data-tables/jquery-ui.js') }}'></script>
+   <script type='text/javascript' src='{{ asset('assets/plugins/data-tables/jquery.dataTables.rowReordering.js') }}'></script>
+   <script type='text/javascript' src='{{ asset('assets/plugins/data-tables/jquery.dataTables.rowGrouping.js') }}'></script>
+   <script type='text/javascript' src='{{ asset('assets/plugins/data-tables/DT_bootstrap.js') }}'></script>
+   <script type='text/javascript' src='{{ asset('assets/redactor/redactor.js') }}'></script>
+   <script type='text/javascript' src='{{ asset('assets/js/jquery.MultiFile.js') }}'></script>
+
+   <script type="text/javascript">
+    $(function()
+    {
+      $('#redactor_content').redactor({
+        focus: true,
+        buttonSource: true,
+        tabAsSpaces: 4,
+        pastePlainText: true,
+        cleanSpaces: false,
+        imageUpload: 'redactor/image_upload.php',
+        fileUpload: 'redactor/file_upload.php',
+        imageGetJson: 'redactor/data.json'
+      });
+    });
+    $(function()
+    {
+      $('#redactor_content2').redactor({
+        focus: true,
+        buttonSource: true,
+        tabAsSpaces: 4,
+        pastePlainText: true,
+        cleanSpaces: false,
+        imageUpload: 'redactor/image_upload.php',
+        fileUpload: 'redactor/file_upload.php',
+        imageGetJson: 'redactor/data.json'
+      });
+    });
+
+$(function()
+    {
+      $('#redactor_content3').redactor({
+        focus: true,
+        buttonSource: true,
+        tabAsSpaces: 4,
+        pastePlainText: true,
+        cleanSpaces: false,
+        imageUpload: 'redactor/image_upload.php',
+        fileUpload: 'redactor/file_upload.php',
+        imageGetJson: 'redactor/data.json'
+      });
+    });
+
+
+    </script>
+   <script src='{{ asset('assets/scripts/app.js') }}'></script>
+   <script src='{{ asset('assets/scripts/table-advanced.js') }}'></script>
+   <script src='{{ asset('assets/scripts/table-default.js') }}'></script>
+
+   <script>
+    jQuery(document).ready(function() {
+        App.init();
+        TableDefault.init();
+    });
+   </script>
+   <script type='text/javascript'>
+       $(function() {
+           $( "#sortable" ).sortable({
+               update: function (event, ui) {
+                   var data = $(this).sortable('serialize');
+
+                   // POST to server using $.post or $.ajax
+                   $.post('imagesort.php', {data: data, id:'{$con.id}', tablo:'{$tablo}'});
+               },
+               stop: function (event, ui) {
+                   location.reload(true);
+
+                   //
+               }
+           });
+       });
+       $( "#sortable" ).disableSelection();
+   </script>
+   <script type='text/javascript'>
+            function ActivePost( id ){
+                var $product = $('#' + id + 'active');
+                $.post('../active.php', {id:id},
+                function(data) {
+                  if(data=='success'){
+                    if($product.hasClass('activeted')){
+                      $product.html('Deactive').removeClass('activeted').addClass('deactiveted');
+                    }else if($product.hasClass('deactiveted')){
+                      $product.html('Active').removeClass('deactiveted').addClass('activeted');
+                    }
+                  }else{
+                    return false;
+                  }
+                });
+            };
+    </script>
+
+    <script type='text/javascript'>
+            function CatChange( id ){
+                var $category = $('#' + id + 'category').val();
+                $.post('../catchange.php', {cat:$category,id:id},
+                function(data) {
+                  if(data=='success'){
+                    alert('Category Changed');
+                  }else{
+                    return false;
+                  }
+                });
+            };
+    </script>
+
+    <script type='text/javascript'>
+            function Popular( id ){
+                var $checked = $('#' + id + 'popular').is(':checked');
+                if ($checked) {
+                  var $vall = '1';
+                } else {
+                  var $vall = '0';
+                }
+                $.post('../popular.php', {vall:$vall,id:id},
+                function(data) {
+                  if(data=='success'){
+                    alert('Item added or removed from popular list.');
+                  }else{
+                    return false;
+                  }
+                });
+            };
+    </script>
+
+    <script type='text/javascript'>
+            function ImageDelete( image, id, counter ){
+              var $confirm = confirm("Silmek istediğinizden emin misiniz?");
+              if ($confirm) {
+                var $imageid = $('#' + 'img_' + counter );
+                $.post('imagedelete.php', {image:image,id:id},
+                function(data) {
+                  if(data=='success'){
+                    $imageid.css("display","none");
+                  }else{
+                    return false;
+                  }
+                });
+              }
+            };
+    </script>
+
+    <script type='text/javascript'>
+            function ImageDelete2( image, id, counter ){
+              var $confirm = confirm("Silmek istediğinizden emin misiniz?");
+              if ($confirm) {
+                var $imageid = $('#' + 'img_' + counter );
+                $.post('imagedelete2.php', {image:image,id:id},
+                function(data) {
+                  if(data=='success'){
+                    $imageid.css("display","none");
+                  }else{
+                    return false;
+                  }
+                });
+              }
+            };
+    </script>
+
+    <script type='text/javascript'>
+            function ImageDelete3( image, id, counter ){
+              var $confirm = confirm("Silmek istediğinizden emin misiniz?");
+              if ($confirm) {
+                var $imageid = $('#' + 'img_' + counter );
+                $.post('imagedelete3.php', {image:image,id:id},
+                function(data) {
+                  if(data=='success'){
+                    $imageid.css("display","none");
+                  }else{
+                    return false;
+                  }
+                });
+              }
+            };
+    </script>
+</body>
+</html>

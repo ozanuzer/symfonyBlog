@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang='tr' class='ie8 no-js'> <![endif]-->
+<!--[if IE 9]> <html lang='tr' class='ie9 no-js'> <![endif]-->
+<!--[if !IE]><!--> <html lang='tr' class='no-js'> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+   <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+   <title>{{ admin_title }}</title>
+
+   <meta content='width=device-width, initial-scale=1.0' name='viewport' />
+   <meta content='' name='description' />
+   <meta content='' name='author' />
+   <meta name='MobileOptimized' content='320'>
+   <!-- BEGIN GLOBAL MANDATORY STYLES -->
+   <link href='{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}' rel='stylesheet' type='text/css'/>
+   <link href='{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}' rel='stylesheet' type='text/css'/>
+   <link href='{{ asset('assets/plugins/uniform/css/uniform.default.css') }}' rel='stylesheet' type='text/css'/>
+   <!-- END GLOBAL MANDATORY STYLES -->
+   <!-- BEGIN PAGE LEVEL STYLES -->
+   <link rel='stylesheet' type='text/css' href='{{ asset('assets/plugins/select2/select2_metro.css') }}' />
+   <link rel='stylesheet' href='{{ asset('assets/plugins/data-tables/DT_bootstrap.css') }}' />
+   <link rel='stylesheet' href='{{ asset('assets/plugins/data-tables/jquery-ui.css') }}' />
+   <!-- END PAGE LEVEL STYLES -->
+   <!-- BEGIN THEME STYLES -->
+   <link href='{{ asset('assets/css/style-metronic.css') }}' rel='stylesheet' type='text/css'/>
+   <link href='{{ asset('assets/css/style.css') }}' rel='stylesheet' type='text/css'/>
+   <link href='{{ asset('assets/css/style-responsive.css') }}' rel='stylesheet' type='text/css'/>
+   <link href='{{ asset('assets/css/plugins.css') }}' rel='stylesheet' type='text/css'/>
+   <link href='{{ asset('assets/css/themes/default.css') }}' rel='stylesheet' type='text/css' id='style_color'/>
+   <link href='{{ asset('assets/css/custom.css') }}' rel='stylesheet' type='text/css'/>
+   <link href='{{ asset('assets/redactor/redactor.css') }}' rel='stylesheet' type='text/css'/>
+   <!-- END THEME STYLES -->
+   <link rel='shortcut icon' href='{{ asset('favicon.ico') }}' />
+   <style>
+        .activeted {
+          color: green;
+        }
+        .deactiveted {
+          color: red;
+        }
+  </style>
+  <style>
+      #sortable { list-style-type: none; margin: 0; padding: 0; }
+      #sortable li {height:165px; padding: 1px; float: left; text-align: center; border: none; }
+  </style>
+  <script type='text/javascript'>
+        function confirmDelete() {
+          return confirm('Do you want delete this item?');
+        }
+        function checkpass(){
+            if ( document.getElementById('pass1').value != document.getElementById('pass2').value ){
+                alert('Password is not mismatch');
+                return false;
+            }
+        }
+        function confirmCheck() {
+            if (document.getElementById('lang_def').checked)
+                return confirm('Do you want select this item as default language? Old default language will be change with this.');
+        }
+    </script>
+    <script src='{{ asset('assets/plugins/jquery-1.10.2.min.js') }}' type='text/javascript'></script>
+    <script type='text/javascript' src='{{ asset('assets/js/Chart.js') }}'></script>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class='page-header-fixed'>
+   <!-- BEGIN HEADER -->
+   <div class='header navbar navbar-inverse navbar-fixed-top'>
+      <!-- BEGIN TOP NAVIGATION BAR -->
+      <div class='header-inner'>
+         <!-- BEGIN LOGO -->
+         <a class='navbar-brand' href='index.html'>
+         <!--<img src='assets/img/logo.png' alt='logo' class='img-responsive' />--!
+         </a>
+         <!-- END LOGO -->
+         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+         <a href='javascript:;' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+         <img src='{{ asset('assets/img/menu-toggler.png') }}' alt='' />
+         </a>
+         <!-- END RESPONSIVE MENU TOGGLER -->
+         <!-- BEGIN TOP NAVIGATION MENU -->
+         <ul class='nav navbar-nav pull-right'>
+            <!-- BEGIN NOTIFICATION DROPDOWN --><!--
+            <li class='dropdown' id='header_notification_bar'>
+               <a href='#' class='dropdown-toggle' data-toggle='dropdown' data-hover='dropdown'
+                  data-close-others='true'>
+               <i class='icon-warning-sign'></i>
+               <span class='badge'>4</span>
+               </a>
+               <ul class='dropdown-menu extended notification'>
+                  <li>
+                     <p>Notifications</p>
+                  </li>
+                  <li>
+                     <ul class='dropdown-menu-list scroller' style='height: 250px;'>
+                        <li>
+                           <a href='#'>
+                           <span class='label label-icon label-success'><i class='icon-plus'></i></span>
+                           Your new product get/update process is done without any warnings.
+                           <span class='time'>Just now</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href='#'>
+                           <span class='label label-icon label-danger'><i class='icon-bolt'></i></span>
+                           Your new product get/update process couldn't finished.
+                           <span class='time'>15 mins</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href='#'>
+                           <span class='label label-icon label-warning'><i class='icon-bell'></i></span>
+                           Your new product get/update process is done with some warnings.
+                           <span class='time'>22 mins</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href='#'>
+                           <span class='label label-icon label-info'><i class='icon-bullhorn'></i></span>
+                           Your new product get/update process is done with some errors.
+                           <span class='time'>40 mins</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class='external'>
+                     <a href='#'>See all notifications <i class='m-icon-swapright'></i></a>
+                  </li>
+               </ul>
+            </li>-->
+            <!-- END NOTIFICATION DROPDOWN -->
+            <!-- BEGIN USER LOGIN DROPDOWN -->
+            <li class='dropdown user'>
+               <a href='#' class='dropdown-toggle' data-toggle='dropdown' data-hover='dropdown' data-close-others='true'>
+               <span class='username'>Email</span>
+               <i class='icon-angle-down'></i>
+               </a>
+               <ul class='dropdown-menu'>
+                  <!--<li><a href='{$baseurl}panel/settings/'><i class='icon-user'></i> Settings</a>
+                  </li>-->
+                  <li class='divider'></li>
+                  <li><a href='{$baseurl}panel/login.php?process=logout'><i class='icon-key'></i> Çıkış</a>
+                  </li>
+               </ul>
+            </li>
+            <!-- END USER LOGIN DROPDOWN -->
+         </ul>
+         <!-- END TOP NAVIGATION MENU -->
+      </div>
+      <!-- END TOP NAVIGATION BAR -->
+   </div>
+   <!-- END HEADER -->
+   <div class='clearfix'></div>
+   <!-- BEGIN CONTAINER -->
+   <div class='page-container'>
+      <!-- BEGIN SIDEBAR -->
+      <div class='page-sidebar navbar-collapse collapse'>
+         <!-- BEGIN SIDEBAR MENU -->
+         <ul class='page-sidebar-menu'>
+            <li>
+               <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+               <div class='sidebar-toggler hidden-phone'></div>
+               <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+            </li>
+            <li class='<?=$cat_active;?>'>
+               <a href='/admin/categories'>
+               <i class='icon-folder-open'></i>
+               <span class='title'>Kategoriler</span>
+               </a>
+            </li>
+            <li class='<?=$prd_active;?>'>
+               <a href='/admin/contents'>
+               <i class='icon-sitemap'></i>
+               <span class='title'>İçerikler</span>
+               </a>
+            </li>
+            <li class='last <?=$user_active;?>'>
+               <a href='/admin/users'>
+               <i class='icon-user'></i>
+               <span class='title'>Kullanıcı Yönetimi</span>
+               </a>
+            </li>
+         </ul>
+         <!-- END SIDEBAR MENU -->
+      </div>
+      <!-- END SIDEBAR -->
